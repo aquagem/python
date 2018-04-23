@@ -1,6 +1,13 @@
 import os
 
 def search_text(searchTxt, folderPath, delimiter):
+    '''
+        This function searches for the text in a delimited text files first column for every line
+        If a match is found, the prints the file name
+        searchTxt: value to be searched
+        folderPath: path where the files are located
+        delimiter: how the records in the files are separated
+    '''
     match = 0
     fileList = []
 

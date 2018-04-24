@@ -6,3 +6,4 @@ Created this repository to add the the scripts that a user can use on a day to d
 ---|---|
 *imagebase64.py*|This function is used to get the base64 value of an image which can be used to embed the image|
 *searchTextinfile.py*|This function searches for the text in a delimited text files first column for every line.<br>If a match is found, the prints the file name.<br>searchTxt: value to be searched. <br>folderPath: path where the files are located. <br>delimiter: how the records in the files are separated
+*searchTextCmd.py*|Same as the above function, except that it can be run through command line

@@ -21,14 +21,16 @@ def check_fileext(filename, extension):
 
 
 def csvwrite(mydata):
-    print(','.join(mydata))
+    ##print(','.join(mydata))
 
     with open(newFile, 'a') as f1:
         # writer = csv.writer(f1,delimiter=',')
-        for line in mydata:
-            # print(line)
+        f1.write(','.join(mydata))
+        f1.write('\n')
+        #for line in mydata:
+            #print(line)
             # writer.writerow(line)
-            f1.write(line)
+            #f1.write(line)
 
 
 # glb_filePath = input("Global customers file path:")  # get the file path

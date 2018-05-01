@@ -26,7 +26,7 @@ def csvwrite(mydata,filename):
     #if filename == finalFile:
         #print(mydata)
         #print(''.join(mydata))
-    with open(filename, 'a') as f1:
+    with open(filename, 'a+') as f1:
         # writer = csv.writer(f1,delimiter=',')
         f1.write(','.join(mydata))
         f1.write('\n')

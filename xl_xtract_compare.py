@@ -8,6 +8,7 @@ ntnl_Cust = []
 
 glb_filePath = "u:\downloads\A.csv"
 ntnl_filePath = "U:\downloads\B.xlsx"
+finalFile = os.path.splitext(glb_filePath)[0] + '_final' + os.path.splitext(glb_filePath)[1]
 
 
 def check_filexists(filename):
@@ -20,10 +21,12 @@ def check_fileext(filename, extension):
         return True
 
 
-def csvwrite(mydata):
+def csvwrite(mydata,filename):
     ##print(','.join(mydata))
-
-    with open(newFile, 'a') as f1:
+    #if filename == finalFile:
+        #print(mydata)
+        #print(''.join(mydata))
+    with open(filename, 'a') as f1:
         # writer = csv.writer(f1,delimiter=',')
         f1.write(','.join(mydata))
         f1.write('\n')
@@ -86,11 +89,30 @@ for i in range(len(ntnl_Cust)):
     for row in reader:
         # print(str(row[5]))
         if str(ntnl_Cust[i]).split("-")[0].strip() == str(row[5]):
-            row.append("," + str(row[5]))
-            csvwrite(row)
-        else:
-            row.append(",NA")
-            csvwrite(row)
+            #row.append("," + str(row[5]))
+            print(row)
+            csvwrite(row, newFile)
+        #else:
+            #row.append(",NA")
+            #csvwrite(row)
 
 # csvFile.close
 xlFile.release_resources()
+
+# Compare 2 csv files (original and new)
+with open(glb_filePath, 'r') as t1, open(newFile, 'r') as t2:
+    file1 = t1.readlines()
+    file2 = t2.readlines()
+    #print("A")
+
+##finalFile = os.path.splitext(glb_filePath)[0] + '_final' + os.path.splitext(glb_filePath)[1]
+with open(finalFile,'w') as outFile:
+    for line in file1:  
+        if line in file2:
+            line = line.rstrip('\n').split(',')
+            line.append(line[5])
+            csvwrite(line, finalFile)
+        else:
+            line = line.rstrip('\n').split(',')
+            line.append("NA")
+            csvwrite(line, finalFile)

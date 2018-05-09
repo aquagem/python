@@ -86,8 +86,8 @@ if len(get_csvfiles(csvfolder)) > 0:
             reader = csv.reader(infile.readlines())
             writer = csv.writer(ofile)
             for line in reader:
-                if line[5] in ntnl_Cust:
-                    line.append(line[5])
+                if line[7] in ntnl_Cust:
+                    line.append(line[7])
                     writer.writerow(line)
                     #break
                 else:

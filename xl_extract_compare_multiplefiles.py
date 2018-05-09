@@ -13,10 +13,10 @@ from xlrd import open_workbook
 from xlsxwriter.workbook import Workbook
 import shutil
 
-# csvfolder = input("Provide the folder where csv files are located:")
-# ntnl_filePath = input("National customers file path:")
-csvfolder = "U:\Downloads\\temp1"
-ntnl_filePath = "U:\Downloads\B.xlsx"
+csvfolder = input("Provide the folder where csv files are located:")
+ntnl_filePath = input("National customers file path:")
+# csvfolder = "U:\Downloads\\temp1"
+# ntnl_filePath = "U:\Downloads\B.xlsx"
 
 xl_workbook = csvfolder +"\mergedXL.xlsx"
 temp_folder = csvfolder +"\\temp"

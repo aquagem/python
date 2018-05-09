@@ -1,5 +1,8 @@
-# Script to read multiple csv files in a folder and place them into one Excel sheet 
-# Every csv file is under a new tab in excel sheet
+# This script will get the list of records from a Excel file  (File B data)
+# Go through every csv file in the folder specified and check if the File B records exist
+# If a match occurs, then append that matched string to that line
+# Then convert all the csv files into individual excel files
+# and place the contents of the csv files into one excel sheet with every csv file in one tab
 
 import csv
 import xlsxwriter
@@ -7,6 +10,8 @@ import sys
 import os
 import glob
 from xlrd import open_workbook
+from xlsxwriter.workbook import Workbook
+import shutil
 
 # csvfolder = input("Provide the folder where csv files are located:")
 # ntnl_filePath = input("National customers file path:")
@@ -55,35 +60,6 @@ def getNationalCustomers():
 
     xlFile.release_resources()  # Close the Excel File
 
-
-
-########FUNCTION CALLS########
-getNationalCustomers()
-
-if len(get_csvfiles(csvfolder)) > 0:
-    for f in csvfiles:
-        with open(f, 'r') as csvFile:  # open file in read-only mode
-            data = csvFile.readlines()
-        for i in range(len(ntnl_Cust)):  # loop through every element of list of Natioanl Customers
-            reader = csv.reader(data)
-            for row in reader:  # if the row value of file B matches 5th column of file A then write it into a new file
-                if str(ntnl_Cust[i]).split("-")[0].strip() == str(row[5]):
-                    row.append(str(row[5]))
-                    #csvwrite(row, os.path.splitext(f)[0] + '_temp' + os.path.splitext(f)[1], temp_folder)
-                    csvwrite(row, f, csvfolder)
-else:
-    sys.exit("There are no csv files in this directory: {} ".format(csvfolder))
-
-print(len(data))
-
-#for tempfile in os.listdir(temp_folder):
-#    print(tempfile)
-
-
-
-
-#####################################################################
-'''
 def write2XL():
     wb = xlsxwriter.Workbook(xl_workbook)
     for cfile in csvfiles:
@@ -97,12 +73,55 @@ def write2XL():
                     ws.write(i,j,each)
                 i +=1
     wb.close
-    
+
+
+########FUNCTION CALLS########
+getNationalCustomers()
+ntnl_Cust = [str(ntnl_Cust[i]).split("-")[0].strip() for i in range(len(ntnl_Cust))]
+
+if len(get_csvfiles(csvfolder)) > 0:
+    for f in csvfiles:
+        temp_file = os.path.splitext(f)[0] + '_temp' + os.path.splitext(f)[1]
+        with open(f, 'r') as infile, open(temp_file,'w') as ofile:
+            reader = csv.reader(infile.readlines())
+            writer = csv.writer(ofile)
+            for line in reader:
+                if line[5] in ntnl_Cust:
+                    line.append(line[5])
+                    writer.writerow(line)
+                    #break
+                else:
+                    writer.writerow(line)
+        with open(temp_file, "r") as fin, open(os.path.splitext(f)[0] + '_temp_1' + os.path.splitext(f)[1], "w") as fout:
+            for line in fin:
+                if not line.strip():
+                    continue
+                fout.write(line)
+        shutil.move(fout.name,temp_file)
+        shutil.move(temp_file, f)
+else:
+    sys.exit("There are no csv files in this directory: {} ".format(csvfolder))
 
 
 
-if len(get_csvfiles()) > 0:
+#####################################################################
+if len(get_csvfiles(csvfolder)) > 0:
     write2XL()
 else:
-    print("There are no csv files in this directory: {} ".format(csvfolder))'''
+    print("There are no csv files in this directory: {} ".format(csvfolder))
 #####################################################################
+
+# Individual Excel Files:
+os.chdir(csvfolder)
+for csvfile in glob.glob(os.path.join('.', '*.csv')):  # this picks every .csv file
+    workbook = Workbook(csvfile[:-4] + '.xlsx')
+    #print(csvfile[:-4])
+    worksheet = workbook.add_worksheet()
+    with open(csvfile, 'rt', encoding='utf8') as f:  # open every csv file, rt: read-only in text mode
+        reader = csv.reader(f)  # reads every file line by line
+        for r, row in enumerate(reader):  # enumerate adds the index to every line
+            #print('r--: '+str(r)) # counts the row
+            for c, col in enumerate(row):  # counts columns
+                #print('c--:{}  col:{}'.format(str(c),col))
+                worksheet.write(r, c, col)
+    workbook.close()

@@ -14,7 +14,7 @@ from xlsxwriter.workbook import Workbook
 import shutil
 
 csvfolder = input("Provide the folder where csv files are located:")
-ntnl_filePath = input("National customers file path:")
+ntnl_filePath = input("NCs file path:")
 # csvfolder = "U:\Downloads\\temp1"
 # ntnl_filePath = "U:\Downloads\B.xlsx"
 
@@ -43,8 +43,8 @@ def csvwrite(mydata, filename, folderName=temp_folder):
         f1.write('\n')
 
 
-# Get the list of national customers from the excel file  FILE B
-def getNationalCustomers():
+# Get the list of NCs from the excel file  FILE B
+def getNCs():
     global ntnl_Cust
     if os.path.isfile(ntnl_filePath):
         if os.path.splitext(ntnl_filePath)[1] == ".xlsx":
@@ -76,7 +76,7 @@ def write2XL():
 
 
 ########FUNCTION CALLS########
-getNationalCustomers()
+getNCs()
 ntnl_Cust = [str(ntnl_Cust[i]).split("-")[0].strip() for i in range(len(ntnl_Cust))]
 
 if len(get_csvfiles(csvfolder)) > 0:

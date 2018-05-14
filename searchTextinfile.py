@@ -25,6 +25,7 @@ def search_text(searchTxt, folderPath, delimiter):
         delimiter: how the records in the files are separated
     '''
     match = 0
+    filematch = 0
     fileList = []
 
     for fileName in os.listdir(folderPath):

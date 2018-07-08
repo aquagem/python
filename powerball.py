@@ -27,7 +27,7 @@ for k in range(1, total_set + 1):
 # print all the number
 m = 0
 for l in final_luckynum:
-    print("Ticket {} : {} --> PowerBall: {}".format(m, l, power_list[m]))
+    print("Ticket {} : {} \t {} PowerBall: {}".format(m, l, '--' * 5, power_list[m]))
     m += 1
 
 # print("Lucky Numbers: {}".format(l for l in final_luckynum))

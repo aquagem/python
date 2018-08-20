@@ -15,8 +15,7 @@ class PdfFunctions:
         for page in range(inputpdf.numPages):
             outpdf = PdfFileWriter()
             outpdf.addPage(inputpdf.getPage(page))
-            with open("C:\\Users\\gauth\\Desktop\\tempc\\temp1\\DRUZ0001_{}.pdf".format(page), "wb") as outputStream:
-                # with open("C:\\Users\\gauth\\Desktop\\temp\\temp1\\MARO0001_{}.pdf".format(page), "wb") as outputStream:
+            with open("<pdf_filePath with filename>".format(page), "wb") as outputStream:
                 outpdf.write(outputStream)
 
     def merge_pdf(self):
@@ -27,13 +26,11 @@ class PdfFunctions:
             print(file1)
             print(inputpdf.numPages)
             merger.append(PdfFileReader(open(folderpath + file1, 'rb')))
-        merger.write(folderpath + "/DRUZ0001.pdf")
-        # merger.write(folderpath + "/MARO0001.pdf")
+        merger.write(folderpath + "/<filename>.pdf")
 
 
 def main():
-    pdf1 = PdfFunctions("C:\\Users\\gauth\\Desktop\\tempc\\DRUZ0001.pdf", "C:\\Users\\gauth\\Desktop\\tempc\\temp1\\")
-    # pdf1 = PdfFunctions("C:\\Users\\gauth\\Desktop\\tempc\\MARO0001.pdf", "C:\\Users\\gauth\\Desktop\\tempc\\temp1\\")
+    pdf1 = PdfFunctions("<pdf_filePath with filename>", "<location where the files will be placed>")
     # pdf1.split_pdf()
     pdf1.merge_pdf()
 

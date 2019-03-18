@@ -21,11 +21,11 @@ def writetofile(filename, content):
 with open(json_file, 'r') as f:
     jsonstr = f.read()
     json_data = json.loads(jsonstr)[0]
-    datapoints = json_data['PosItems']
+    datapoints = json_data['Item1']
     for i in range(len(datapoints)):
-        positemId = json_data['PosItems'][i]['PosItemId']
-        name = json_data['PosItems'][i]['Name']
-        desc = json_data['PosItems'][i]['Description']
+        positemId = json_data['Item1'][i]['ChildItem1']
+        name = json_data['Item1'][i]['ChildItem2']
+        desc = json_data['Item1'][i]['ChildItem3']
         posvals.append(positemId + '|' + name + '|'+ desc)
 
 writetofile(resultfile,posvals)
